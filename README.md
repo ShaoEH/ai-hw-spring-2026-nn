@@ -1,10 +1,5 @@
 # Assignment #4.1: MNIST Recognition by NN 🧠
 
-**Author:** Shao En Hung (Aden)  
-**Course:** AI Hardware / Deep Learning (Spring 2026)
-
----
-
 ## 🎯 1. Project Objective
 The goal of this project is to build and train a Convolutional Neural Network (CNN) using PyTorch to accurately recognize handwritten digits from the MNIST dataset. 
 
