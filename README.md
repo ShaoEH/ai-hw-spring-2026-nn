@@ -48,3 +48,6 @@ The model converged quickly and achieved excellent performance on the unseen val
 
 ## 💡 5. Conclusion & Challenges
 The combination of two Convolutional layers and an aggressive Dropout strategy (0.3 and 0.4) effectively prevented overfitting, allowing the model to achieve over **99% accuracy**. The addition of random rotation during training also ensured the model is robust against slightly tilted handwriting.
+
+<img width="576" height="455" alt="image" src="https://github.com/user-attachments/assets/6c6f2f33-15ce-47c5-8b40-70ad9407b10b" />
+
