@@ -1,51 +1,54 @@
-# Assignment #4.1: MNIST Recognition by NN 🧠
+# Assignment #4.1: MNIST Recognition - Model Architecture Comparison 🧠
 
 ## 🎯 1. Project Objective
-The goal of this project is to build and train a Convolutional Neural Network (CNN) using PyTorch to accurately recognize handwritten digits from the MNIST dataset. 
+The goal of this expanded project is to train and compare the performance of three distinct neural network architectures on the MNIST dataset. By evaluating a Shallow MLP, a Convolutional Neural Network (CNN), and a Vision-based Transformer Encoder, we can analyze their convergence speed and final accuracy.
 
 ---
 
-## 🏗️ 2. Model Architecture
-The model uses a custom CNN architecture designed to extract spatial features effectively while preventing overfitting using Dropout layers.
-
-| Layer Type | Configuration | Activation Function |
-| :--- | :--- | :--- |
-| **Conv2D** | Input: 1, Output: 64, Kernel: 3x3, Stride: 1 | ReLU |
-| **Conv2D** | Input: 64, Output: 128, Kernel: 3x3, Stride: 1 | ReLU |
-| **MaxPooling2D** | Kernel: 2x2 | - |
-| **Dropout** | Probability: 0.3 | - |
-| **Flatten** | 18432 features | - |
-| **Linear (Dense)** | Input: 18432, Output: 256 | ReLU |
-| **Dropout** | Probability: 0.4 | - |
-| **Linear (Dense)** | Input: 256, Output: 10 (Classes) | - |
+## ⚙️ 2. Data Preprocessing & Setup
+To ensure the models are robust against handwriting variations, **Data Augmentation** was applied during the training phase.
+* **Augmentation**: Random rotation of up to 20 degrees.
+* **Global Parameters**: 
+  * Loss Function: Cross-Entropy Loss.
+  * Training Epochs (Rounds): 5.
+  * Batch Size: 64.
+  * Hardware: Trained on GPU (CUDA).
 
 ---
 
-## ⚙️ 3. Hyperparameters & Setup
-To improve model robustness, I applied **Data Augmentation** during the training phase, specifically a random rotation of up to 20 degrees.
+## 🏗️ 3. Model Architectures & Hyperparameters
+We designed three separate models with architecture-specific learning rates using the Adam optimizer:
 
-* **Optimizer:** Adam
-* **Learning Rate:** 0.0001
-* **Loss Function:** Cross-Entropy Loss
-* **Epochs (Rounds):** 5
-* **Batch Size:** 64
-* **Hardware:** Trained on GPU (CUDA)
+### 🔸 Model 1: Shallow MLP (Multi-Layer Perceptron)
+* **Structure**: Flatten layer -> Linear layer (128 units) -> ReLU -> Linear output (10 classes).
+* **Optimizer Setting**: Adam with Learning Rate = 0.001.
 
----
+### 🔸 Model 2: CNN (Convolutional Neural Network)
+* **Structure**: 2 Conv2D layers -> MaxPooling2D -> Dropout (0.3) -> Flatten -> Linear (256 units) -> Dropout (0.4) -> Linear output.
+* **Optimizer Setting**: Adam with Learning Rate = 0.0001.
 
-## 📊 4. Training Results
-The model converged quickly and achieved excellent performance on the unseen validation dataset within just 5 epochs.
-
-* **Final Training Loss:** 0.06449
-* **Validation Accuracy:** **99.09%**
-
-### Loss Progression
-<img width="576" height="455" alt="image" src="https://github.com/user-attachments/assets/6c6f2f33-15ce-47c5-8b40-70ad9407b10b" />
+### 🔸 Model 3: Transformer (Encoder-Only)
+* **Structure**: Linear Input Projection -> Positional Encoding -> Transformer Encoder (2 layers, 4 heads, dropout 0.1) -> Mean Pooling -> Linear output.
+* **Optimizer Setting**: Adam with Learning Rate = 0.0005.
 
 ---
 
-## 💡 5. Conclusion & Challenges
-The combination of two Convolutional layers and an aggressive Dropout strategy (0.3 and 0.4) effectively prevented overfitting, allowing the model to achieve over **99% accuracy**. The addition of random rotation during training also ensured the model is robust against slightly tilted handwriting.
+## 📊 4. Training Results & Comparison
+All three models were trained under the exact same conditions (5 epochs). The results clearly show how different architectures handle spatial image data.
+
+| Model Architecture | Final Test Accuracy |
+| :--- | :--- |
+| **Shallow MLP** | **97.80%** |
+| **CNN** | **99.12%** |
+| **Transformer (Encoder)** | **97.43%** |
+
+### Loss & Accuracy Progression
+<img width="846" height="547" alt="image" src="https://github.com/user-attachments/assets/ff4ecc2a-c34a-44fd-b26f-826e87e5a071" />
 
 
+---
 
+## 💡 5. Conclusion
+* The **Shallow MLP** provides a strong baseline, converging quickly but lacking spatial awareness of the image.
+* The **CNN** achieved the highest accuracy (**99.12%**), proving that convolutional filters are highly effective at capturing local pixel features (edges, curves) in image data.
+* The **Transformer Encoder** introduces a sequence-based attention mechanism to images, demonstrating how modern attention architectures can be adapted for traditional computer vision tasks.
